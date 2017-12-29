@@ -1,3 +1,4 @@
+//Inspired by Senrui Chen
 #include <stdio.h>
 #include <stdlib.h>
 
