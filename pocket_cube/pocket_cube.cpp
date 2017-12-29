@@ -3,16 +3,15 @@
 #include <string>
 #include <map>
 #include <queue>
-//#include <utility>
 using namespace std;
-class cube;
-class status;
+class cube;	//cube--六进制数
+class status; //记录对cube的操作
 typedef unsigned long long int type;
 typedef map<cube, status> my_map;
 typedef pair<cube, status> my_pair;
 typedef map<cube, status>::iterator it;
 typedef queue<pair<cube, status>> my_queue;
-string int_operate(const int operate_type, bool if_inverse)
+string int_operate(const int operate_type, bool if_inverse) 
 {
 	if (if_inverse == 0)
 	{
@@ -75,12 +74,10 @@ class cube
 {
 public:
 	type a;
-	//static bool *is_expanded;
 	cube()
 	{
 		int temp = 0;
 		a = 0;
-		//*is_expanded = 0;
 		for (int i = 0; i < 24; ++i)
 		{
 			cin >> temp;
@@ -95,7 +92,6 @@ public:
 	cube(int * color_series, size_t length)
 	{
 		a = 0;
-	//	*is_expanded = 0;
 		if (length != 24 * sizeof(int))
 		{
 			cerr << "segmation fault!!" << endl;
@@ -385,6 +381,7 @@ int main()
 		it it_down = map_down.begin();
 		it it_up_ex = map_up_expanded.begin();
 		it it_down_ex = map_down_expanded.begin();
+		//判断是否出现匹配
 		while (it_up != map_up.end())
 		{
 			if (map_down.find(it_up->first) != map_down.end())
@@ -396,6 +393,7 @@ int main()
 			}
 			it_up++;
 		}
+		//将需要扩展的节点加入queue中
 		while(it_up_ex != map_up_expanded.end())
 		{
 			it temp = it_up_ex;
@@ -403,7 +401,7 @@ int main()
 			it_up_ex++;
 			map_up_expanded.erase(temp->first);
 		}
-		//map_up_expanded.clear();
+		//扩展节点
 		while(!queue_up.empty())
 		{
 			my_pair temp = queue_up.front();
@@ -416,6 +414,7 @@ int main()
 			}
 			queue_up.pop();
 		}
+		//判断
 		while (it_down != map_down.end())
 		{
 			if (map_up.find(it_down->first) != map_up.end())
@@ -427,6 +426,7 @@ int main()
 			}
 			it_down++;
 		}
+		//加入queue
 		while (it_down_ex != map_down_expanded.end())
 		{
 			it temp = it_down_ex;
@@ -434,7 +434,7 @@ int main()
 			it_down_ex++;
 			map_down_expanded.erase(temp->first);
 		}
-		//map_down_expanded.clear();
+		//扩展
 		while(!queue_down.empty())
 		{
 			my_pair temp = queue_down.front();
